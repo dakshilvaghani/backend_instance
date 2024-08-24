@@ -1,8 +1,15 @@
 // register
 {
-  "email": "",
-  "password": "",
-  "name": "",
-  "role": "",
-  "gender": ""
+  "email": "test@gmail.com",
+  "password": "test",
+  "name": "vaghani",
+  "role": "patient",
+  "gender": "male"
+}
+
+//login
+
+{
+    "email": "test@gmail.com",
+    "password": "test"
 }
