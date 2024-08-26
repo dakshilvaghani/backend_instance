@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
-import Doctor from "../models/DoctorSchema.js";
+import Admin from "../models/AdminSchema.js";
 import User from "../models/UserSchema.js";
 
 export const authenticate = async (req, res, next) => {
   // get token from headers
   const authToken = req.headers.authorization;
 
+  console.log(authToken);
   // check if token exists
   if (!authToken || !authToken.startsWith("Bearer ")) {
     return res.status(401).json({
@@ -18,6 +19,8 @@ export const authenticate = async (req, res, next) => {
     const token = authToken.split(" ")[1];
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEYS);
+
+    // console.log(decoded);
 
     req.userId = decoded.id;
     req.role = decoded.role;
@@ -33,19 +36,19 @@ export const authenticate = async (req, res, next) => {
 
 export const restrict = (roles) => async (req, res, next) => {
   const userId = req.userId;
-  let user;
-  const patient = await User.findById(userId);
-  const doctor = await Doctor.findById(userId);
+  let userr;
+  const user = await User.findById(userId);
+  const admin = await Admin.findById(userId);
 
-  if (patient) {
-    user = patient;
+  if (user) {
+    userr = user;
   }
 
-  if (doctor) {
-    user = doctor;
+  if (admin) {
+    userr = admin;
   }
 
-  if (!user || !roles.includes(user.role)) {
+  if (!userr || !roles.includes(userr.role)) {
     return res
       .status(401)
       .json({ success: false, message: "You're not authorized" });

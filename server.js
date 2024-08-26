@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
+import dataRoute from "./routes/data.js";
 import morgan from "morgan";
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use("/api/auth", authRoute);
+app.use("/api/data", dataRoute);
 
 // database connection
 mongoose.set("strictQuery", false);
